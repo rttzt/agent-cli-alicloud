@@ -1,0 +1,13 @@
+[project]
+name = "xiaohongshu-trend-agent"
+version = "0.1.0"
+description = "帮助品牌方运营人员快速分析小红书爆文趋势，拆解爆款要素并生成选题建议"
+requires-python = ">=3.11"
+dependencies = [
+    "agentscope>=0.1",
+    "dashscope>=1.14",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

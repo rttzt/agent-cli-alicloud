@@ -1,0 +1,9 @@
+"""小红书爆文分析 Agent 基础测试"""
+
+from agent.main import main
+
+
+def test_main_returns_string() -> None:
+    result = main("测试查询")
+    assert isinstance(result, str)
+    assert "测试查询" in result

@@ -1,0 +1,11 @@
+# 澄清问题与答案
+
+> Agent 想法：{{ idea }}
+
+{% for q in questions %}## {{ loop.index }}. {{ q.category }}
+
+**问题**: {{ q.question }}
+
+**答案**: {{ q.answer }}
+
+{% endfor %}

@@ -1,0 +1,25 @@
+# Dependencies & virtual environments
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# OS
+.DS_Store
+
+# Env files with secrets
+.env
+
+# Google agents-cli reference repo (has own .git, not our code)
+agents-cli/
+
+# Qoder internal
+.qoder/
+
+# uv lock (regenerable)
+uv.lock
