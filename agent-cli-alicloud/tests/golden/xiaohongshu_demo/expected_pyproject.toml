@@ -1,0 +1,11 @@
+[project]
+name = "xiaohongshu-trend-agent"
+version = "0.1.0"
+description = "xiaohongshu-trend-agent — powered by AgentScope"
+requires-python = ">=3.11"
+dependencies = [
+    "agentscope>=0.1.0",
+]
+
+[project.scripts]
+xiaohongshu-trend-agent = "agent.main:main"

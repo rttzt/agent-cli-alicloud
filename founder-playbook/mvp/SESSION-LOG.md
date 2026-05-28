@@ -27,6 +27,22 @@
 
 ## 历史记录（按时间倒序）
 
+### 2026-05-25：Qoder (MVP-2) | agent-cli-alicloud v0.2 CLI + Skills 双层架构完整交付
+
+- **任务**：按 `01-mvp-spec.md` v0.2 规格从零实现 agent-cli-alicloud 项目，交付 3 个 CLI 命令 + 4 个 SKILL.md + Golden Snapshot 测试
+- **改动**：
+  - 项目骨架：pyproject.toml / Makefile / ruff.toml / .python-version / install.sh
+  - Core 模块：manifest.py / detector.py / scaffold.py / installer.py（mypy strict 通过）
+  - CLI 命令：setup（检测+装 Skills）/ init（jinja2 渲染骨架）/ info（读 manifest）
+  - Jinja2 模板：9 个 .j2 文件（AgentScope 兼容项目骨架）
+  - 4 个 SKILL.md：workflow（190 行，含 Phase 0/1）/ scaffold（143 行）/ deploy（138 行）/ eval（180 行）
+  - 测试：48 个测试全过（含 4 个 Golden Snapshot）
+  - README（中文 5 分钟 quickstart）+ install.sh
+- **verify 命令是否通过**：✅（pytest 48 passed / ruff check 零错误 / mypy 零错误 / grep 红线检查通过）
+- **遗留**：D1-D4 Demo 验收路径需人工跑一遍三方协作流程
+
+---
+
 ### 2026-05-21 | Qoder (MVP-2) | agent-cli init 命令端到端实现
 
 - **任务**：从零搭建 agent-cli-alicloud 项目，实现 `agent-cli init "<idea>"` 命令 4/4 步骤端到端跑通（Mock 模式）

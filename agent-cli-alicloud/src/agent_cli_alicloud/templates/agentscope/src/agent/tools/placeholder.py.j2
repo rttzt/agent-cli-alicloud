@@ -1,0 +1,16 @@
+"""占位工具示例 — 由 agent-cli init 生成。
+
+真实工具由用户的 Coding Agent 在 workflow Skill 引导下实现。
+"""
+
+
+def placeholder_tool(query: str) -> str:
+    """占位工具：echo 输入内容。
+
+    Args:
+        query: 用户输入
+
+    Returns:
+        原样返回输入内容
+    """
+    return f"[placeholder] {query}"

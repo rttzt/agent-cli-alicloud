@@ -1,0 +1,11 @@
+[project]
+name = "{{ project_name }}"
+version = "0.1.0"
+description = "{{ project_name }} — powered by AgentScope"
+requires-python = ">=3.11"
+dependencies = [
+    "agentscope>=0.1.0",
+]
+
+[project.scripts]
+{{ project_name }} = "agent.main:main"

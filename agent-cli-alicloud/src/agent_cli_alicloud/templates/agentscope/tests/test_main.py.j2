@@ -1,0 +1,30 @@
+"""{{ project_name }} 基础测试。"""
+
+from agent.main import create_model, mock_reply
+
+
+def test_mock_reply_contains_query() -> None:
+    """mock_reply 应返回包含输入内容的字符串。"""
+    result = mock_reply("你好")
+    assert "你好" in result
+    assert "{{ project_name }}" in result
+
+
+def test_mock_reply_indicates_mock_mode() -> None:
+    """mock_reply 应提示用户处于 Mock 模式。"""
+    result = mock_reply("测试")
+    assert "Mock" in result
+
+
+def test_create_model_without_agentscope() -> None:
+    """无 AgentScope 或无 API key 时 create_model 返回 None。"""
+    import os
+
+    # 确保无 API key 时返回 None
+    original = os.environ.pop("DASHSCOPE_API_KEY", None)
+    try:
+        model = create_model()
+        assert model is None
+    finally:
+        if original is not None:
+            os.environ["DASHSCOPE_API_KEY"] = original

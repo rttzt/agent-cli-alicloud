@@ -1,0 +1,9 @@
+.env.example
+README.md
+agent-cli-manifest.yaml
+pyproject.toml
+src/agent/__init__.py
+src/agent/main.py
+src/agent/tools/__init__.py
+src/agent/tools/placeholder.py
+tests/test_main.py
