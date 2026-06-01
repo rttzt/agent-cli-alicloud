@@ -9,3 +9,8 @@ dependencies = [
 
 [project.scripts]
 xiaohongshu-trend-agent = "agent.main:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]
