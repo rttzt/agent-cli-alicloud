@@ -25,15 +25,15 @@ class TestDetectAgents:
         names = {a.name for a in agents}
         assert names == {"Qoder", "通义灵码", "Claude Code", "Cursor"}
 
-    @patch("agent_cli_alicloud.core.detector.Path.exists", return_value=True)
-    def test_all_detected_when_dirs_exist(self, mock_exists):
-        """所有目录存在时 detected 应全为 True。"""
+    @patch("agent_cli_alicloud.core.detector._is_agent_installed", return_value=True)
+    def test_all_detected_when_dirs_exist(self, mock_installed):
+        """所有 Agent 已安装时 detected 应全为 True。"""
         agents = detect_agents()
         assert all(a.detected for a in agents)
 
-    @patch("agent_cli_alicloud.core.detector.Path.exists", return_value=False)
-    def test_none_detected_when_dirs_missing(self, mock_exists):
-        """所有目录不存在时 detected 应全为 False。"""
+    @patch("agent_cli_alicloud.core.detector._is_agent_installed", return_value=False)
+    def test_none_detected_when_dirs_missing(self, mock_installed):
+        """所有 Agent 未安装时 detected 应全为 False。"""
         agents = detect_agents()
         assert not any(a.detected for a in agents)
 
@@ -103,3 +103,42 @@ class TestDetectedAgent:
         )
         assert agent_true.detected is True
         assert agent_false.detected is False
+
+
+class TestIsAgentInstalled:
+    """_is_agent_installed 综合检测逻辑测试。"""
+
+    def test_skills_dir_exists_returns_true(self, tmp_path):
+        """skills 目录存在时应返回 True（即使无 executable）。"""
+        from agent_cli_alicloud.core.detector import _is_agent_installed
+
+        skills_dir = tmp_path / "skills"
+        skills_dir.mkdir()
+        assert _is_agent_installed(skills_dir, "", "") is True
+
+    def test_nothing_exists_returns_false(self, tmp_path):
+        """什么都不存在时应返回 False。"""
+        from agent_cli_alicloud.core.detector import _is_agent_installed
+
+        skills_dir = tmp_path / "nonexistent" / "skills"
+        assert _is_agent_installed(skills_dir, "", "") is False
+
+    @patch("agent_cli_alicloud.core.detector.shutil.which", return_value="/usr/local/bin/qoder")
+    def test_executable_found_returns_true(self, mock_which, tmp_path):
+        """可执行文件在 PATH 中时应返回 True（即使 skills 目录不存在）。"""
+        from agent_cli_alicloud.core.detector import _is_agent_installed
+
+        skills_dir = tmp_path / "nonexistent" / "skills"
+        assert _is_agent_installed(skills_dir, "qoder", "") is True
+
+    def test_config_file_found_returns_true(self, tmp_path):
+        """配置目录存在时应返回 True。"""
+        from agent_cli_alicloud.core.detector import _is_agent_installed
+
+        skills_dir = tmp_path / "nonexistent" / "skills"
+        config_dir = tmp_path / ".test-agent"
+        config_dir.mkdir()
+        # 用 monkeypatch 模拟 home 目录比较复杂，直接测试 config 路径存在的情况
+        # 这里通过 patch Path.home 实现
+        with patch("agent_cli_alicloud.core.detector.Path.home", return_value=tmp_path):
+            assert _is_agent_installed(skills_dir, "", ".test-agent") is True

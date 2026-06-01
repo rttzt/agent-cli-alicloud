@@ -21,7 +21,7 @@ class TestInfoCommand:
             path=tmp_path,
             name="test-project",
             template_name="agentscope",
-            template_version="0.1.0",
+            template_version="0.2.0",
             agent_directory="src/agent",
             cli_version="0.2.0",
         )
@@ -40,7 +40,7 @@ class TestInfoCommand:
             path=tmp_path,
             name="test-project",
             template_name="agentscope",
-            template_version="0.1.0",
+            template_version="0.2.0",
             agent_directory="src/agent",
             cli_version="0.2.0",
         )
@@ -68,7 +68,7 @@ class TestInfoCommand:
             path=tmp_path,
             name="full-info-test",
             template_name="agentscope",
-            template_version="0.1.0",
+            template_version="0.2.0",
             agent_directory="src/agent",
             cli_version="0.2.0",
         )
@@ -82,3 +82,8 @@ class TestInfoCommand:
         assert "Agent 目录" in result.output
         assert "CLI 版本" in result.output
         assert "创建时间" in result.output
+
+    def test_info_invalid_format_rejected(self):
+        """非法 format 值应被 typer 拒绝。"""
+        result = runner.invoke(app, ["info", "--format", "xml"])
+        assert result.exit_code != 0

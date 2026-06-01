@@ -8,11 +8,11 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
-from typing import Annotated, Optional
+from typing import Annotated, Literal, Optional
 
 import typer
 
-from agent_cli_alicloud import __version__
+from agent_cli_alicloud import TEMPLATE_VERSION, __version__
 from agent_cli_alicloud.core.detector import detect_agents
 from agent_cli_alicloud.core.installer import SKILL_NAMES, install_skills
 from agent_cli_alicloud.core.manifest import read_manifest, write_manifest
@@ -64,7 +64,14 @@ def setup(
         raise typer.Exit(code=1)
 
     # 安装 Skills
-    results = install_skills(detected_agents)
+    try:
+        results = install_skills(detected_agents)
+    except (OSError, FileNotFoundError) as e:
+        typer.echo(
+            f"安装 Skills 失败: {e}，建议：检查目标目录写入权限后重试",
+            err=True,
+        )
+        raise typer.Exit(code=1)
 
     # 统计
     total_agents = len(results)
@@ -155,7 +162,7 @@ def init(
         path=output_dir,
         name=name,
         template_name=template,
-        template_version="0.1.0",
+        template_version=TEMPLATE_VERSION,
         agent_directory="src/agent",
         cli_version=__version__,
     )
@@ -175,11 +182,12 @@ def init(
 @app.command()
 def info(
     format: Annotated[
-        str,
+        Literal["text", "json"],
         typer.Option(
             "--format",
             "-f",
             help="输出格式（text|json）",
+            case_sensitive=False,
         ),
     ] = "text",
 ) -> None:

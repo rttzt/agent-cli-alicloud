@@ -53,11 +53,11 @@ def render_template(
     }
 
     # 模板文件到输出路径的映射
+    # 注意：agent-cli-manifest.yaml 不在此列表中，由 cli.py 的 write_manifest() 统一生成
     template_files: list[tuple[str, str]] = [
         ("pyproject.toml.j2", "pyproject.toml"),
         ("README.md.j2", "README.md"),
         ("env.example.j2", ".env.example"),
-        ("manifest.yaml.j2", "agent-cli-manifest.yaml"),
         ("src/agent/__init__.py.j2", "src/agent/__init__.py"),
         ("src/agent/main.py.j2", "src/agent/main.py"),
         ("src/agent/tools/__init__.py.j2", "src/agent/tools/__init__.py"),

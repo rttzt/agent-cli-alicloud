@@ -52,7 +52,7 @@ PR / 文档 / 代码注释**禁止混用**这两个词，必要时用 `dev-workf
 ```bash
 uv run pytest
 uv run ruff check
-uv run mypy src/agent_cli_alicloud/core
+uv run mypy src/agent_cli_alicloud/
 ```
 
 `make verify` 是上述三条的集合命令。修改 `templates/` 后 golden 测试若失败，**先评估"是模板有问题还是 golden 过期"**，不要无脑刷新 golden。

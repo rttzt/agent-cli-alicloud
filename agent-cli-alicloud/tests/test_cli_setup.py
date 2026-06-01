@@ -73,3 +73,17 @@ class TestSetupCommand:
         assert result.exit_code == 0
         assert "跳过" in result.output
         assert "Cursor" in result.output
+
+    @patch("agent_cli_alicloud.cli.install_skills")
+    @patch("agent_cli_alicloud.cli.detect_agents")
+    def test_setup_install_failure(self, mock_detect, mock_install):
+        """install_skills 抛出 OSError 时应友好报错而非 traceback。"""
+        mock_detect.return_value = [
+            _make_agent("Qoder", detected=True),
+        ]
+        mock_install.side_effect = OSError("Permission denied")
+
+        result = runner.invoke(app, ["setup"])
+        assert result.exit_code == 1
+        assert "安装 Skills 失败" in result.output
+        assert "建议" in result.output

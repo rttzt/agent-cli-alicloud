@@ -9,4 +9,4 @@ lint:
 	uv run ruff check
 
 typecheck:
-	uv run mypy src/agent_cli_alicloud/core
+	uv run mypy src/agent_cli_alicloud/
