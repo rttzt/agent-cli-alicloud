@@ -13,7 +13,7 @@ uvx agent-cli-alicloud setup
 
 方式二：从源码
 ```bash
-git clone https://github.com/xxx/agent-cli-alicloud.git
+git clone https://github.com/rttzt/agent-cli-alicloud.git
 cd agent-cli-alicloud
 ./install.sh
 ```

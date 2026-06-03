@@ -26,7 +26,7 @@
 ### Task 1：安装 CLI（~1 分钟）
 
 ```bash
-git clone https://github.com/你的仓库地址/agent-cli-alicloud.git
+git clone https://github.com/rttzt/agent-cli-alicloud.git
 cd agent-cli-alicloud
 ./install.sh
 ```
